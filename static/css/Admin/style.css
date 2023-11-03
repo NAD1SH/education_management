@@ -1,0 +1,409 @@
+
+
+/* Registration Form */
+.register-form-wrapper input[type='text'],
+input[type='email'],
+input[type='password'] {
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    width: 100%;
+}
+
+.register-form-wrapper input {
+    margin-bottom: 14px;
+    font-size: 15px;
+}
+
+.batch_field input {
+    max-width: 150px;
+}
+
+.register-form-wrapper select {
+    width: 100%;
+    outline: none;
+    margin-bottom: 14px;
+    border: none;
+    border-bottom: 1px solid black;
+    background-color: #fff;
+}
+
+.register-form-wrapper input[type='submit'] {
+    width: 100%;
+    border: 1px solid black;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.form-div {
+    border: 1px solid black;
+    border-radius: 15px 15px;
+    background-color: #fff;
+    box-shadow: 0px 10px 10px rgb(76, 74, 74);
+}
+
+.message_div {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Home Page */
+.First_section {
+    min-height: 91vh;
+    background-image: url(../../image/Admin/school_image.jpg);
+    background-size: cover;
+}
+
+.nav_bar{
+    height: 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+}
+
+/* Add Course page */
+.course_form_wrapper{
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0px 10px 10px rgb(42, 42, 42);
+}
+
+.course_form_field form label{
+    margin-bottom: 5px;
+}
+
+.course_form_field input,
+.course_form_field textarea{
+    width: 100%;
+    outline: none;
+}
+
+.course_form_field input[type = 'submit']{
+    border: 1px solid black;
+}
+
+/* Add Exam Page */
+.exam_form_wrapper{
+    background-color: #fff;
+    border: 1px solid rgb(37, 37, 37);
+    border-radius: 5px;
+    box-shadow: 0px 10px 10px rgb(49, 49, 49);
+}
+
+.exam_form_field label{
+    margin-bottom: 5px;
+}
+
+.exam_form_field input,
+.exam_form_field select{
+    width: 100%;
+    margin-bottom: 10px;
+    height: 30px;
+    outline: none;
+}
+
+.exam_form_field input[type = 'submit']{
+    margin-top: 10px;
+    border: 1px solid black;
+}
+
+
+/* Add Subject Page */
+.subject_form_wrapper {
+    background-color: #fff;
+    border: 1px solid rgb(37, 37, 37);
+    border-radius: 5px;
+    box-shadow: 0px 10px 10px rgb(49, 49, 49);
+}
+
+.subject_form_field input,
+.subject_form_field select {
+    width: 100%;
+    margin-bottom: 10px;
+    height: 30px;
+    outline: none;
+}
+
+.subject_form_field input[type='submit'] {
+    margin-top: 10px;
+    border: 1px solid black;
+}
+
+/* Show Events Page */
+.table_wrapper table,
+.table_wrapper td,
+.table_wrapper th{
+    border: 1px solid black;
+}
+
+.table_wrapper table{
+    background-color: #fff;
+}
+
+.table_wrapper tr:nth-child(odd) {
+    background-color: #D6EEEE;
+}
+
+.table_wrapper .course_heading{
+    background-color: rgb(91, 91, 91);
+    color: #fff;
+}
+
+/* ------------COUNTRY DETAIL---------- */
+.country_form_wrapper{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.country_form input, .country_form select{
+    width: 100%;   
+    border: 1px solid black;
+    outline: none; 
+    height: 30px;
+}
+
+.country_form .col-4 div{
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+
+
+/* Teacher Attendence Page */
+.attendence_table_field table,
+.attendence_table_field th,
+.attendence_table_field td{
+    border: 1px solid black;
+}
+
+.attendence_table_field .course_heading {
+    background-color: rgb(91, 91, 91) !important;
+    color: #fff;
+}
+
+.attendence_table_field tr:nth-child(odd) {
+    background-color: #D6EEEE;
+}
+
+
+/*-------------- STUDENT LIST PAGE --------------*/
+.student_table_field th,
+.student_table_field td,
+.student_table_field table {
+    border: 1px solid rgb(50, 47, 47);
+}
+
+.student_table_field .table_heading{
+    background-color: rgb(91, 91, 91) !important;
+    color: #fff;
+}
+
+.student_table_field tr:nth-child(odd) {
+    background-color: #D6EEEE;
+}
+
+/* ---------------Teacher List Page ----------------*/
+.teacher_table_field th,
+.teacher_table_field td,
+.teacher_table_field table {
+    border: 1px solid rgb(50, 47, 47);
+}
+
+.teacher_table_field .table_heading {
+    background-color: rgb(91, 91, 91) !important;
+    color: #fff; 
+}
+
+.teacher_table_field tr:nth-child(odd) {
+    background-color: #D6EEEE;
+}
+
+
+/* ----------------- OTP PAGE --------------- */
+.otp_form_field input{
+    width: 100%;
+    margin-bottom: 5px;
+    height: 32px;
+    font-size: 15px;
+}
+
+.otp_form_field input[type = 'submit'] {
+    border: 1px solid black;
+    color: #fff;
+}
+
+.otp_form_wrapper{
+    border: 1px solid black;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 10px 10px rgb(76, 76, 76);
+}
+
+/* LOGIN PAGE */
+.login_field{
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 10px 10px rgb(76, 76, 76);
+    max-width: 370px;
+}
+
+.login_field input{
+    width: 100%;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    outline: none;
+    font-size: 15px;
+    height: 32px;
+}
+
+/* ----------- Create Room Page ----------*/
+.room_form_wrapper{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.room_form_field{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.room_form{
+    min-width: 400px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 10px 10px rgb(38, 37, 37);
+}
+
+.room_form input, .room_form select{
+    width: 100%;
+    height: 30px;
+    outline: none;
+    margin-bottom: 10px;
+    border: 1px solid black;
+}
+
+
+/* -------------Chat Room List------------ */
+.chat_room{
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgb(54, 97, 98);
+    box-shadow: 0px 0px 20px rgb(45, 45, 45);
+    border-radius: 20px;
+}
+
+.chat_room span{
+    font-size: 12px;
+}
+
+.chat_room p{
+    font-size: 30px;
+    font-family: cursive;
+    text-align: center;
+}
+
+.chat_room button {
+    width: 100%;
+    height: 40px;
+    border: 1px solid rgb(234, 232, 232);
+    border-radius: 25px;
+    color: #fff;
+}
+
+.message_tracking{
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    background-color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 11px;
+    text-align: center;
+    padding-top: 3px;
+}
+
+/*------------------CHAT ROOM---------------*/
+.message_recieve_and_send_part{
+    padding: 0px 150px;
+}
+
+.message_show_part{
+    border-radius: 35px;
+    background-color: #fff;
+    box-shadow: 0px 0px 15px blueviolet;
+}
+
+.message_part{
+    height: 500px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+.message_send_form{
+    border-radius: 35px;
+    background-color: #fff;
+    box-shadow: 0px 0px 15px cadetblue;
+}
+
+.message_send_form input[type = 'text']{
+    width: 90%;
+    outline: none;
+    border-right: none;
+    border: none;
+    background-color: #dadada;
+    height: 32px;
+    border-radius: 5px;
+}
+
+.message_send_form button {
+    width: 8%;
+    /* margin-left: -4px; */
+    border: none;
+    height: 32px;
+    border-radius: 5px;
+}
+
+.other_mess{
+    display: flex;
+    justify-content: start;
+}
+
+.other_message{
+    max-width: 75%;
+    border: 1px solid black;
+    background-color: #f2f2f2;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.user_mess{
+    display: flex;
+    justify-content: end;
+}
+
+.user_message{
+    max-width: 75%;
+    background-color: blueviolet;
+    border: 1px solid black;
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+}
+

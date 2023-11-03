@@ -1,0 +1,130 @@
+{% extends "Admin/base.html" %}
+{% load static %}
+
+
+{% block header %}
+<div class="nav_bar bg-primary d-flex justify-content-between pe-4">
+    <div class="ps-4">
+        <h2 class="text-light mt-1">{{ chat_room }}</h2>
+    </div>
+    <div class="">
+        {% if request.user.role == 'principal' %}
+        <a href="{% url 'chatRooms' %}" class="text-light fs-6">Rooms</a>
+        {% elif request.user.role == 'teacher' %}
+        <a href="{% url 'TrchatRooms' %}" class="text-light fs-6">Rooms</a>
+        {% else %}
+        <a href="{% url 'SdHome' %}" class="text-light fs-6">Rooms</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock header %}
+
+
+{% block content %}
+<section>
+    <div class="container pt-5">
+        <div class="message_recieve_and_send_part pt-3">
+            <div class="message_show_part mb-1 p-3">
+                <div class="message_part">
+                    <div class="row" id="display_message">
+                        {% for mes in messages %}
+                            {% if mes.user != request.user  %}
+                                <div class="col-12 mb-2 ps-3 other_mess">
+                                    <div class="other_message py-1">
+                                        <span><strong>{{ mes.user.username }}</strong></span><br>
+                                        <p>{{ mes.message }}</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="col-12 mb-2 pe-3 user_mess">
+                                    <div class="user_message py-1">
+                                        <span><strong>{{ mes.user.username }}</strong></span><br>
+                                        <p>{{ mes.message }}</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="message_send_form p-3">
+                <form action="." method="post">
+                    <input type="text" class="px-2" id="message_input" placeholder="Message">
+                    <button type="submit" class="bg-primary" id="submit_btn"><i
+                            class="bi bi-send-fill text-light"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+
+{% block scriptContent %}
+
+{{ chat_room.slug|json_script:"json_roomname" }}
+{{ request.user.username|json_script:"json_username" }}
+
+<script>
+    const roomName = JSON.parse(document.getElementById('json_roomname').textContent);
+    const userName = JSON.parse(document.getElementById('json_username').textContent);
+    var displayMessage = document.getElementById('display_message')
+
+    console.log(roomName)
+    console.log(userName)
+
+    const chatSocket = new WebSocket(`ws://${window.location.host}/ws/${roomName}/`);
+
+    console.log(chatSocket)
+
+    chatSocket.addEventListener('message', (e) => {
+        console.log('Received message');
+
+        const data = JSON.parse(e.data)
+
+        console.log(data)
+
+        if (data.message) {
+            displayMessage.innerHTML += `
+                    <div class="col-12 mb-2 pe-3 user_mess">
+                        <div class="user_message py-1">
+                            <span><strong>${data.username}</strong></span><br>
+                            <p>${data.message}</p>
+                        </div>
+                    </div>
+                `
+        } else {
+            alert('message was empty...!')
+        }
+    })
+
+    chatSocket.addEventListener('close', (e) => {
+        console.log('WebSocket closed');
+    });
+
+    document.querySelector('#submit_btn').onclick = function (e) {
+        e.preventDefault();
+        const messageInput = document.querySelector('#message_input');
+        const message = messageInput.value;
+
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username': userName,
+            'room': roomName
+        }));
+
+        messageInput.value = '';
+
+        return false
+    }
+
+    // function scrollToBottom() {
+    //     let objDiv = document.getElementById("chat-messages");
+    //     objDiv.scrollTop = objDiv.scrollHeight;
+    // }
+
+    // // Add this below the function to trigger the scroll on load.
+    // scrollToBottom();
+
+</script>
+{% endblock scriptContent %}

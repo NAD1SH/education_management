@@ -1,0 +1,49 @@
+{% extends "Teacher/base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="nav_bar bg-primary d-flex justify-content-between pe-4">
+    <div class="ps-4">
+        <h2 class="text-light mt-1">STUDENT LIST</h2>
+    </div>
+    <div class="">
+        <a href="{% url 'TrHome' %}" class="text-light fs-3 me-3 mt-1"><i class="bi bi-house-door-fill"></i></a>
+        <a href="{% url 'addMark' %}" class="text-light me-3">Add Mark + </a>
+        <a href="{% url 'stdExport' %}" class="text-light fs-4 mt-1"><i class="bi bi-download"></i></a>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="student_list_table pt-5">
+            <table id="std_table" class="w-100 text-center table">
+                <tr class="table_header">
+                    <th style="width: 20%;">Register Number</th>
+                    <th style="width: 20%;">Name</th>
+                    <th style="width: 20%;">Email</th>
+                    <th style="width: 15%;">Course</th>
+                    <th style="width: 15%;">Batch</th>
+                    <th style="width: 10%;">Mark</th>
+                </tr>
+                {% for i in std %}
+                <tr>
+                    <td>{{ i.reg_no }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.user.email }}</td>
+                    <td>{{ i.course }}</td>
+                    <td>{{ i.batch_start }} - {{ i.batch_end }}</td>
+                    <td>
+                        <a href="{% url 'markList' i.id %}">mark</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block scriptContent %}
+{% endblock scriptContent %}

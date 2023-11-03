@@ -1,0 +1,167 @@
+{% extends "Admin/base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="nav_bar bg-primary d-flex justify-content-between pe-4">
+    <div class="ps-4">
+        <h2 class="text-light mt-1">STUDENT REGISTER</h2>
+    </div>
+    <div class="">
+        <a href="{% url 'home' %}" class="text-light fs-3 me-3 mt-1"><i class="bi bi-house-door-fill"></i></a>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<section>
+    <div class="container pt-5  ">
+        <div class="register-form-wrapper d-flex justify-content-center align-items-center">
+            <div class="form-fields mt-4">
+                <div class="form-div p-4">
+                    <form method="post" id="RegisterForm">
+                        {% csrf_token %}
+                        <input type="text" name="username">
+                        <br>
+
+                        <input type="password" name="password">
+                        <br>
+
+                        <input type="email" name="email">
+                        <br>
+
+                        {{ form.reg_no }}
+                        <br>
+
+                        {{ form.name }}
+                        <br>
+
+                        {{ form.contact }}
+                        <br>
+
+                        <div class="batch_field">
+                            {{ form.batch_start }}
+                            {{ form.batch_end }}
+                        </div>
+
+                        {{ form.course }}
+                        <br>
+
+                        <select id="country" name="country">
+                            <option value="" selected>Country</option>
+                            {% for country in countries %}
+                            <option value="{{ country.id }}">{{ country.name }}</option>
+                            {% endfor %}
+                        </select><br>
+
+                        <select id="state" name="state" disabled>
+                            <option value="">Select State</option>
+                        </select><br>
+
+                        <select id="district" name="district" disabled>
+                            <option value="">Select District</option>
+                        </select><br>
+
+                        <!-- To get recaptcha token to authenticate -->
+                        <input type="text" id="token" name="token" hidden>
+
+                        <input type="submit" value="submit" class="bg-success py-1">
+                    </form>
+                </div>
+                {% if messages %}
+                {% for i in messages %}
+                <div class="message_div">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <strong>{{ i }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block scriptContent %}
+
+<script src="https://www.google.com/recaptcha/api.js?render=6LfB2HQoAAAAAP7y_K2tGoJPJzi5ioZpO07c0BrQ"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#country").change(function () {
+            var selectedCountryId = $(this).val();
+            if (selectedCountryId) {
+                $.ajax({
+                    url: "/Admin/get/get_states/",
+                    data: {
+                        'country_id': selectedCountryId
+                    },
+                    success: function (data) {
+                        console.log('helo')
+                        var stateDropdown = $("#state");
+                        stateDropdown.empty();
+                        stateDropdown.append('<option value="">Select State</option>');
+                        $.each(data.states, function (key, value) {
+                            console.log('hiii')
+                            stateDropdown.append($("<option></option>").attr("value", value.id).text(value.name));
+                        });
+                        stateDropdown.prop('disabled', false);
+                    }
+                });
+            } else {
+                console.log('esdfsadfsd')
+                $("#state").empty().prop('disabled', true);
+                $("#district").empty().prop('disabled', true);
+            }
+        });
+
+        $("#state").change(function () {
+            var selectedStateId = $(this).val();
+            if (selectedStateId) {
+                $.ajax({
+                    url: "/Admin/get/get_districts/",
+                    data: {
+                        'state_id': selectedStateId
+                    },
+                    success: function (data) {
+                        var districtDropdown = $("#district");
+                        districtDropdown.empty();
+                        districtDropdown.append('<option value="">Select District</option>');
+                        $.each(data.districts, function (key, value) {
+                            districtDropdown.append($("<option></option>").attr("value", value.id).text(value.name));
+                        });
+                        districtDropdown.prop('disabled', false);
+                    }
+                });
+            } else {
+                $("#district").empty().prop('disabled', true);
+            }
+        });
+    });
+
+    grecaptcha.ready(function () {
+        grecaptcha.execute('6LfB2HQoAAAAAP7y_K2tGoJPJzi5ioZpO07c0BrQ', { action: 'submit' }).then(function (token) {
+            // Add your logic to submit to your backend server here.
+            document.getElementById('token').value = token;
+        });
+    });
+
+    inp_field = document.getElementsByTagName('input');
+    inp_field[1].placeholder = 'Username...';
+    pass = inp_field[2];
+    pass.placeholder = 'Password...'
+    pass.setAttribute('minlength', 8)
+    inp_field[3].placeholder = 'Email...';
+    reg = inp_field[4]
+    reg.setAttribute('value', 'STD00');
+    inp_field[5].placeholder = 'Name...';
+    inp_field[7].placeholder = 'Batch Start';
+    inp_field[8].placeholder = 'Batch End';
+    contact = inp_field[6]
+    contact.placeholder = 'Phone...';
+    contact.setAttribute('maxlength', 10);
+    contact.setAttribute('minlength', 10);
+
+</script>
+{% endblock scriptContent %}

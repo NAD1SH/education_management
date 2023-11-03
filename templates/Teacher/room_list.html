@@ -1,0 +1,45 @@
+{% extends "Teacher/base.html" %}
+{% load static %}
+
+
+{% block header %}
+<div class="nav_bar bg-primary d-flex justify-content-between pe-4">
+    <div class="ps-4">
+        <h2 class="text-light mt-1">CHAT ROOMS</h2>
+    </div>
+    <div class="">
+        <a href="{% url 'TrHome' %}" class="text-light fs-3 me-3 mt-1"><i class="bi bi-house-door-fill"></i></a>
+    </div>
+</div>
+{% endblock header %}
+
+
+{% block content %}
+<section>
+    <div class="container-fluid mt-5">
+        <div class="show_all_rooms pt-4 px-1">
+            <div class="list_room">
+                <div class="row">
+                   {% for room in rooms %}
+                    <div class="col-3">
+                        <div class="chat_room p-3 mb-3 position-relative">
+                            <span class="text-light">{{ room.course }}</span><br>
+                            <p class="text-light">{{ room.room }}</p>
+                            <a href="{% url 'TrchatRoom' room.slug %}">
+                                <button class="bg-success">Join</button>
+                            </a>
+                            <div class="message_tracking">10
+                            </div>
+                        </div>
+                    </div>
+                   {% endfor %}                   
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+
+{% block scriptContent %}
+{% endblock scriptContent %}

@@ -1,0 +1,117 @@
+{% extends 'Teacher/base.html' %}
+{% load static %}
+
+{% block head %}
+<script>
+    window.onpageshow = function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+</script>
+{% endblock head %}
+
+{% block header %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary text-light">
+    <div class="container-fluid">
+        <h2>Teacher PAGE</h2>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'upload' %}">Course Material</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'studentList' %}">Student List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#!" id="attendence_btn">Attendence</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'TrchatRooms' %}">Room</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Notification
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item text-dark" href="{% url 'sent_notification' %}">Notification</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-dark" href="{% url 'sent_announcement' %}">Announcement</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light fs-5" href="{% url 'profile' %}"><i class="bi bi-person-square"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light fs-4" href="{% url 'logout' %}"><i class="bi bi-box-arrow-in-right"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock header %}
+
+{% block content %}
+
+<div class="attendence_mark_sheet_hide" id="attendence_sheet">
+    {% if mrng_time == True %}
+    <div class="attendence_form_wrapper">
+        <form action="{% url 'mrng' %}" method="post">
+            {% csrf_token %}
+            <input type="checkbox" name="mrng" id="mrng" hidden value="True" required>
+            <label for="mrng" class="mrngAttent">Morning</label>
+            <input type="submit" value="MARK" class="btn btn-dark">
+        </form>
+    </div>
+    {% elif evng_time == True %}
+    <div class="attendence_form_wrapper">
+        <form action="{% url 'evng' %}" method="post" id="evngForm">
+            {% csrf_token %}
+            <input type="checkbox" name="evng" id="evng" value="True" required hidden>
+            <label for="evng" class="">Evening</label>
+            <input type="submit" value="MARK" class="btn btn-dark">
+        </form>
+    </div>
+    {% else %}
+    <div class="attendence_form_wrapper bg-danger">
+        <strong class="text-light">Today Attentence Time Has Been Over</strong>
+    </div>
+    {% endif %}
+</div>
+
+<section class="teacher_home_page_first_section">
+    <div class="container-fluid">
+
+    </div>
+</section>
+{% endblock content %}
+
+{% block scriptContent %}
+<script>
+    Attendence_Btn = document.getElementById('attendence_btn');
+    Attendence_Sheet = document.getElementById('attendence_sheet')
+
+    var checkClick = false
+    Attendence_Btn.addEventListener('click', () => {
+        if (checkClick == false) {
+            Attendence_Sheet.classList.remove("attendence_mark_sheet_hide");
+            Attendence_Sheet.classList.add("attendence_mark_sheet");
+            checkClick = true;
+        } else {
+            Attendence_Sheet.classList.remove("attendence_mark_sheet");
+            Attendence_Sheet.classList.add("attendence_mark_sheet_hide");
+            checkClick = false;
+        }
+    });
+
+</script>
+{% endblock scriptContent %}

@@ -1,0 +1,165 @@
+{% extends "Admin/base.html" %}
+{% load static %}
+
+{% block head %}
+<script>
+    window.onpageshow = function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    }
+</script>
+{% endblock head %}
+
+{% block header %}
+<div class="nav_bar bg-primary d-flex justify-content-between pe-4">
+    <div class="ps-4">
+        <h2 class="text-light mt-1">TEACHER REGISTER</h2>
+    </div>
+    <div class="">
+        <a href="{% url 'home' %}" class="text-light fs-3 me-3 mt-1"><i class="bi bi-house-door-fill"></i></a>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<section>
+    <div class="container pt-4">
+        <div class="register-form-wrapper d-flex justify-content-center align-items-center">
+            <div class="form-fields mt-3">
+                <div class="form-div p-4 mt-5">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="text" name="username">
+                        <br>
+
+                        <input type="password" name="password">
+                        <br>
+
+                        <input type="email" name="email">
+                        <br>
+
+                        {{ form.reg_no }}
+                        <br>
+
+                        {{ form.name }}
+                        <br>
+
+                        {{ form.contact }}
+                        <br>
+
+                        <select id="country" name="country">
+                            <option value="" selected>Country</option>
+                            {% for country in countries %}
+                            <option value="{{ country.id }}">{{ country.name }}</option>
+                            {% endfor %}
+                        </select><br>
+
+                        <select id="state" name="state" disabled>
+                            <option value="">Select State</option>
+                        </select><br>
+
+                        <select id="district" name="district" disabled>
+                            <option value="">Select District</option>
+                        </select><br>
+
+                        <!-- To get recaptcha token to authenticate -->
+                        <input type="text" id="token" name="token" hidden>
+
+                        <input type="submit" value="submit" class="bg-success py-1">
+                    </form>
+                </div>
+                {% if messages %}
+                {% for i in messages %}
+                <div class="message_div">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <strong>{{ i }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block scriptContent %}
+<script src="https://www.google.com/recaptcha/api.js?render=6LfB2HQoAAAAAP7y_K2tGoJPJzi5ioZpO07c0BrQ"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    inp_field = document.getElementsByTagName('input');
+    inp_field[1].placeholder = 'Enter Username...';
+    pass = inp_field[2];
+    pass.placeholder = 'Enter Password...'
+    pass.setAttribute('minlength', 8)
+    inp_field[3].placeholder = 'Enter Email...';
+    reg = inp_field[4]
+    reg.setAttribute('value', 'TR00');
+    inp_field[5].placeholder = 'Enter Name...';
+    phone = inp_field[6]
+    phone.placeholder = 'Enter Phone Number...';
+    phone.setAttribute('minlength', 10)
+    phone.setAttribute('maxlength', 10)
+
+    // Dependent DropDown
+    $(document).ready(function () {
+        $("#country").change(function () {
+            var selectedCountryId = $(this).val();
+            if (selectedCountryId) {
+                $.ajax({
+                    url: "/Admin/get/get_states/",
+                    data: {
+                        'country_id': selectedCountryId
+                    },
+                    success: function (data) {
+                        var stateDropdown = $("#state");
+                        stateDropdown.empty();
+                        stateDropdown.append('<option value="">Select State</option>');
+                        $.each(data.states, function (key, value) {
+                            stateDropdown.append($("<option></option>").attr("value", value.id).text(value.name));
+                        });
+                        stateDropdown.prop('disabled', false);
+                    }
+                });
+            } else {
+                $("#state").empty().prop('disabled', true);
+                $("#district").empty().prop('disabled', true);
+            }
+        });
+
+        $("#state").change(function () {
+            var selectedStateId = $(this).val();
+            if (selectedStateId) {
+                $.ajax({
+                    url: "/Admin/get/get_districts/",
+                    data: {
+                        'state_id': selectedStateId
+                    },
+                    success: function (data) {
+                        var districtDropdown = $("#district");
+                        districtDropdown.empty();
+                        districtDropdown.append('<option value="">Select District</option>');
+                        $.each(data.districts, function (key, value) {
+                            districtDropdown.append($("<option></option>").attr("value", value.id).text(value.name));
+                        });
+                        districtDropdown.prop('disabled', false);
+                    }
+                });
+            } else {
+                $("#district").empty().prop('disabled', true);
+            }
+        });
+    });
+
+    // Recaptcha
+    grecaptcha.ready(function () {
+        grecaptcha.execute('6LfB2HQoAAAAAP7y_K2tGoJPJzi5ioZpO07c0BrQ', { action: 'submit' }).then(function (token) {
+            // Add your logic to submit to your backend server here.
+            document.getElementById('token').value = token;
+            console.log(token)
+        });
+    });
+</script>
+{% endblock scriptContent %}

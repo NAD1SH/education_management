@@ -1,0 +1,75 @@
+{% extends "Student/base.html" %}
+{% load static %}
+
+{% block css %}
+<style>
+    .modal {
+        display: none;
+        z-index: 1;
+        width: 500px;
+        height: 300px;
+        position: fixed;
+        top: 30%;
+        left: 30%;
+    }
+</style>
+{% endblock css %}
+
+{% block header %}
+
+{% endblock header %}
+
+
+{% block content %}
+{% for i in video %}
+
+<a href="#" class="video-link">
+    <video width="300" height="250" class="course_video">
+        <source src="{{ i.material.url }}" type="video/mp4">
+    </video>
+</a>
+{% endfor %}
+
+<div id="video-modal" class="modal" style="overflow: hidden;">
+    <a class="close" id="close-modal"><i class="bi bi-x-circle"></i></a>
+    <video controls id="video-player" width="100%">
+        Your browser does not support the video tag.
+    </video>
+</div>
+{% endblock content %}
+
+
+{% block scriptContent %}
+<script>
+    // Get the video link, modal, and close button elements
+    const videoLink = document.getElementsByClassName('video-link');
+    const videoModal = document.getElementById('video-modal');
+    const closeModal = document.getElementById('close-modal');
+    let courseVideo = document.querySelectorAll('.course_video');
+
+    var video_count = videoLink.length
+    // Get the video player element
+    const videoPlayer = document.getElementById('video-player');
+
+    for (var i = 0; i < video_count; i++) {
+        // Function to open the modal
+        videoLink[i].addEventListener('click', event => {
+
+            const url = new URL(event.target.currentSrc);
+            const filePath = url.pathname;
+            videoPlayer.src = filePath
+
+            videoModal.style.display = 'block';
+            videoPlayer.play();
+        });
+
+        // Function to close the modal
+        closeModal.addEventListener('click', event => {
+            videoModal.style.display = 'none';
+            videoPlayer.pause();
+        });
+    }
+
+
+</script>
+{% endblock scriptContent %}

@@ -1,0 +1,147 @@
+{% extends "Admin/base.html" %}
+{% load static %}
+
+
+{% block header %}
+<div class="nav_bar bg-primary d-flex justify-content-between pe-4">
+    <div class="ps-4">
+        <h2 class="text-light mt-1">ADD COUNTRY DETAILS</h2>
+    </div>
+    <div class="">
+        <a href="{% url 'home' %}" class="text-light fs-3 me-3 mt-1"><i class="bi bi-house-door-fill"></i></a>
+        <a href="{% url 'countryList' %}" class="text-light me-2 mt-1"><i class="bi bi-journal-text"></i>Country</a>
+        <a href="{% url 'stateList' %}" class="text-light me-2 mt-1"><i class="bi bi-journal-text"></i>State</a>
+        <a href="{% url 'districtList' %}" class="text-light me-2 mt-1"><i class="bi bi-journal-text"></i>District</a>
+    </div>
+</div>
+{% endblock header %}
+
+
+{% block content %}
+<section>
+    <div class="container-fluid">
+        <div class="country_form_wrapper pt-5">
+            <div class="country_form_field">
+                <div class="country_form">
+                    <div class="row">
+                        <div class="col-4">
+                            <span><strong>Country</strong></span>
+                            <div class="p-3">
+                                <form action="{% url 'add_country' %}" method="post">
+                                    {% csrf_token %}
+                                    {{ country_form.as_p }}
+                                    <input type="submit" value="submit" class="bg-success text-light">
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <span><strong>State</strong></span>
+                            <div class="p-3">
+                                <form action="{% url 'add_state' %}" method="post">
+                                    {% csrf_token %}
+                                    {{ state_form.as_p }}
+                                    <input type="submit" value="submit" class="bg-success text-light">
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <span><strong>District</strong></span>
+                            <div class="p-3">
+                                <form action="{% url 'add_district' %}" method="post">
+                                    {% csrf_token %}
+
+                                    <label for="">Name:</label>
+                                    {{ district_form.name }}
+
+                                    
+                                    <label for="country" class="mt-3">Country:</label>
+                                    <select id="country" name="country" required>
+                                        <option value="" selected>Select Country</option>
+                                        {% for country in countries %}
+                                        <option value="{{ country.id }}">{{ country.name }}</option>
+                                        {% endfor %}
+                                    </select><br>
+
+                                    <label for="state" class="mt-3" >State:</label>
+                                    <select id="state" name="state" disabled required >
+                                        <option value="">Select State</option>
+                                    </select><br> <br>
+                                    <input type="submit" value="submit" class="bg-success text-light">
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if messages %}
+                {% for i in messages %}
+                <div class="message_div">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <strong>{{ i }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+
+
+{% block scriptContent %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Dependent DropDown
+    $(document).ready(function () {
+        $("#country").change(function () {
+            var selectedCountryId = $(this).val();
+            if (selectedCountryId) {
+                $.ajax({
+                    url: "/Admin/get/get_states/",
+                    data: {
+                        'country_id': selectedCountryId
+                    },
+                    success: function (data) {
+                        var stateDropdown = $("#state");
+                        stateDropdown.empty();
+                        stateDropdown.append('<option value="">Select State</option>');
+                        $.each(data.states, function (key, value) {
+                            stateDropdown.append($("<option></option>").attr("value", value.id).text(value.name));
+                        });
+                        stateDropdown.prop('disabled', false);
+                    }
+                });
+            } else {
+                $("#state").empty().prop('disabled', true);
+                $("#district").empty().prop('disabled', true);
+            }
+        });
+
+        $("#state").change(function () {
+            var selectedStateId = $(this).val();
+            if (selectedStateId) {
+                $.ajax({
+                    url: "/Admin/get/get_districts/",
+                    data: {
+                        'state_id': selectedStateId
+                    },
+                    success: function (data) {
+                        var districtDropdown = $("#district");
+                        districtDropdown.empty();
+                        districtDropdown.append('<option value="">Select District</option>');
+                        $.each(data.districts, function (key, value) {
+                            districtDropdown.append($("<option></option>").attr("value", value.id).text(value.name));
+                        });
+                        districtDropdown.prop('disabled', false);
+                    }
+                });
+            } else {
+                $("#district").empty().prop('disabled', true);
+            }
+        });
+    });
+</script>
+{% endblock scriptContent %}

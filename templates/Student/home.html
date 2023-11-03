@@ -1,0 +1,160 @@
+{% extends "Student/base.html" %}
+{% load static %}
+
+{% block css %}
+<script>
+    window.onpageshow = function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+</script>
+<style>
+    .hide-notification {
+        display: none;
+    }
+</style>
+{% endblock css %}
+
+
+{% block header %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary text-light">
+    <div class="container-fluid">
+        <h2>STUDENT PAGE</h2>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="{% url 'courserMaterial' %}" class="nav-link text-light">Study Material</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'notify' %}" class="nav-link text-light">Announcement</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#!" class="nav-link text-light" id="rooms_list">Room</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'library' %}" class="nav-link text-light">Video Library</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'stdProfile' %}" class="nav-link text-light fs-5"><i class="bi bi-person-square"></i></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-light fs-4" href="{% url 'logout' %}"><i class="bi bi-box-arrow-in-right"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock header %}
+
+
+{% block content %}
+<div class="show_room_list_hide p-2" id="show_rooms_list">
+    <div class="row">
+        {% for room in rooms %}
+        <div class="col-12">
+            <div class="room_container mb-2">
+                <div class="room_name py-1 ps-1">
+                    <span>{{ room.room }}</span>
+                </div>
+                <div class="room_join_button py-1 bg-primary">
+                    <a href="{% url 'StChatRoom' room.slug %}">Join</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="notification_container" id="notification_info">
+</div>
+
+<section class="student_home_page_first_section">
+
+</section>
+{% endblock content %}
+
+
+{% block scriptContent %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    let Notification_Info = document.getElementById('notification_info');
+    var room_Btn = document.getElementById('rooms_list');
+    var room_list = document.getElementById('show_rooms_list')
+
+    var checkClick = false
+    room_Btn.addEventListener('click', () => {
+        if (checkClick == false) {
+            room_list.classList.remove("show_room_list_hide");
+            room_list.classList.add("show_room_list");
+            checkClick = true;
+        } else {
+            room_list.classList.remove("show_room_list");
+            room_list.classList.add("show_room_list_hide");
+            checkClick = false;
+        }
+    });
+
+
+
+    function PopUpMessage() {
+        const currentDate = new Date();
+        Notification_Info.innerHTML = "";
+        con = 0;
+        $.ajax({
+            url: '/Student/Render_Notification/',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data != "None") {
+                    var jsonObject = JSON.parse(data);
+                    jsonObject.forEach(element => {
+                        var each_element = element.fields
+                        var scheduledTime = new Date(each_element.scheduled_time); 
+
+                        if (scheduledTime <= currentDate) {
+                            Notification_Info.innerHTML += `
+                                    <div class="notification_popup_card">
+                                        <div class="notification_content_part p-3">
+                                            <div class="content_part text-center">
+                                                <span class="notifiy_content"></span>
+                                            </div>
+                                        </div>
+                                        <div class="notifiaction_cancel_part">
+                                            <button class="close_button"><strong class="text-primary">Cancel</strong></button>
+                                        </div>
+                                    </div>`
+                            let Close_Button = document.getElementsByClassName('close_button');
+                            let Content_Part = document.getElementsByClassName('notifiy_content');
+                            Content_Part[con].innerHTML = each_element.message;
+                            for (let i = 0; i <= con; i++) {
+                                Close_Button[i].addEventListener('click', () => {
+                                    console.log('click')
+                                    window.location.href = `/Student/delete_notification/${jsonObject[i].pk}`;
+                                });
+                            }
+                            con++;
+                        } else {
+                            console.log('no notification')
+                        }
+                    });
+                } else {
+                    console.log('there have no notifications');
+                }
+            },
+        });
+        console.clear()
+    }
+    PopUpMessage();
+    setInterval(PopUpMessage, 60000);
+</script>
+{% endblock scriptContent %}

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+
+    <style>
+        .certificate-card {
+            background-color: #f2f2f2;
+        }
+
+        .headpart {
+            padding: 40px 50px;
+            background-image: linear-gradient(to right, rgb(100, 201, 90), rgb(7, 106, 35));
+            color: #fff;
+            border-radius: 0px 0px 20px 20px;
+            position: relative;
+        }
+
+        .headpart img {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            width: 200px;
+            height: 200px;
+        }
+
+        .body-part {
+            padding: 30px 50px;
+            font-family: monospace;
+        }
+
+        .body-part span {
+            font-size: 15px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .body-part .span_name {
+            font-size: 25px;
+            font-weight: 900;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+
+        .first-span {
+            text-transform: uppercase;
+            font-family: monospace;
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .second-span {
+            text-transform: uppercase;
+            font-family: monospace;
+            font-size: 40px;
+            font-weight: 900;
+        }
+
+        .footer-part {
+            display: flex;
+            width: 100%;
+            padding: 0px 50px;
+            padding-bottom: 35px;
+        }
+
+        .left-part,
+        .right-part {
+            width: 50%;
+        }
+
+        .right-part {
+            display: flex;
+            justify-content: center;
+        }
+
+        .right-part img {
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+
+</head>
+
+<body style="background-color: #f2f2f2;">
+    <div class="main-container">
+        <div class="certificate-card">
+            <div class="headpart">
+                <span class="first-span">Certificate of</span><br>
+                <span class="second-span">Completion</span>
+                <img src="https://imgs.search.brave.com/T-Rj5WCgkhnZYwYW5M6yU-sXcAaaq_m5UXJw3v0HLws/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9waWMu/b25saW5ld2ViZm9u/dHMuY29tL3N2Zy9p/bWdfNDU0Njc3LnBu/Zw"
+                    alt="">
+            </div>
+            <div class="body-part">
+                <span>This is to certify that</span><br>
+                <span class="span_name">{{ std.name }}</span><br>
+                <span>Has successfully completed <br>course of study</span>
+            </div>
+            <div class="footer-part">
+                <div class="left-part">
+                    <p>{{ date }}</p>
+                </div>
+                <div class="right-part">
+                    <img src="https://imgs.search.brave.com/7RcNPZjmEfQ9RpDxTj1TMowLilIiioapNDouFouVO8c/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jbGlw/YXJ0LWxpYnJhcnku/Y29tLzIwMjMvS2Nq/TGV6cUJpLnBuZw"
+                        alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+</body>
+
+<!-- <img src="https://imgs.search.brave.com/G40x-nzlzBkcuHriphvoKN3MB9lkayvUJ9-WpvKPplU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9wbHVz/cG5nLmNvbS9pbWct/cG5nL3NlYWwtaGQt/cG5nLW5ldy1zdmct/aW1hZ2UtMjAwMC5w/bmc" alt=""> -->
+
+</html>

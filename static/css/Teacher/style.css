@@ -1,0 +1,238 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* ----------HOME PAGE------------- */
+.teacher_home_page_first_section .container-fluid{
+    background-image: url(../../image/Teacher/teacher_page_bg.jpg);
+    background-size: cover;
+    width: 100%;
+    height: 91vh;
+}
+
+
+/* Notification Form */
+.notification_form_wrapper {
+    min-height: 91vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification_form_field {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 10px 10px rgb(44, 43, 43);
+    max-width: 550px;
+}
+
+.notification_form_field form input,
+.notification_form_field form textarea,
+.notification_form_field form select {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.notification_form_field form input,
+.notification_form_field form select {
+    height: 32px;
+}
+
+.notification_form_field form label {
+    margin-bottom: 5px;
+}
+
+.notification_form_field form input[type='submit'] {
+    border: 1px solid black;
+}
+
+/* -------------ANNOUNCEMENT PAGE-------------- */
+.send_announcement_form_wrapper {
+    min-height: 91vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send_announcement_form_field{
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 10px 10px rgb(50, 50, 50);
+}
+
+.send_announcement_form_field form input,
+.send_announcement_form_field form textarea{
+    width: 100%;
+    outline: none;
+    border: 1px solid black;
+}
+
+.send_announcement_form_field form input{
+    height: 30px;
+}
+
+
+/* Add Mark Fom */
+.mark_form_wrapper .form_field {
+    border: 1px solid black;
+    background-color: #fff;
+    box-shadow: 0px 5px 10px rgb(73, 71, 71);
+    border-radius: 5px;
+}
+
+.mark_form_wrapper .form_field select {
+    width: 100%;
+    margin-bottom: 10px;
+    height: 30px;
+}
+
+.mark_form_wrapper .form_field input {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.mark_form_wrapper .form_field form label {
+    margin-bottom: 5px;
+}
+
+.mark_form_wrapper .form_field input[type='submit'] {
+    border: 1px solid black;
+    outline: none;
+    color: #fff;
+}
+
+
+/* Course Materials Uploads */
+.upload-materials table,
+.upload-materials th,
+.upload-materials td {
+    border: 1px solid rgb(99, 97, 97);
+    text-align: center;
+}
+
+.upload-materials table th {
+    background-color: rgb(195, 195, 195);
+}
+
+#preview.full-screen {
+    position: fixed;
+    top: -4px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#preview.full-screen img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#preview.full-screen video {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+/* Home Page */
+.attendence_mark_sheet {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+}
+
+.attendence_mark_sheet_hide {
+    display: none;
+}
+
+.attendence_mark_sheet label {
+    padding: 5px 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.attendence_mark_sheet input[type="checkbox"]:checked+label {
+    background-color: rgb(9, 143, 49);
+    color: #fff;
+}
+
+.attendence_mark_sheet label,
+.attendence_mark_sheet input {
+    width: 100%;
+}
+
+.attendence_form_wrapper {
+    min-width: 300px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgb(75, 75, 75);
+}
+
+/* STUDENT LIST TABLE */
+.student_list_table table,
+.student_list_table td,
+.student_list_table th {
+    border: 1px solid black;
+}
+
+.student_list_table .table_header {
+    background-color: grey !important;
+    color: #fff;
+}
+
+.teacher_table_field tr:nth-child(odd) {
+    background-color: #D6EEEE;
+}
+
+
+/* -------------Chat Room List------------ */
+.chat_room {
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgb(54, 97, 98);
+    box-shadow: 0px 0px 20px rgb(45, 45, 45);
+    border-radius: 20px;
+}
+
+.chat_room span {
+    font-size: 12px;
+}
+
+.chat_room p {
+    font-size: 30px;
+    font-family: cursive;
+    text-align: center;
+}
+
+.chat_room button {
+    width: 100%;
+    height: 40px;
+    border: 1px solid rgb(234, 232, 232);
+    border-radius: 25px;
+    color: #fff;
+}
+
+.message_tracking {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    background-color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 11px;
+    text-align: center;
+    padding-top: 3px;
+}

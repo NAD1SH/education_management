@@ -1,0 +1,51 @@
+{% extends "Admin/base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="nav_bar bg-primary d-flex justify-content-between pe-4">
+    <div class="ps-4">
+        <h2 class="text-light mt-1">TEACHER ATTENDENCE</h2>
+    </div>
+    <div class="">
+        <a href="{% url 'home' %}" class="text-light fs-3 me-3 mt-1"><i class="bi bi-house-door-fill"></i></a>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<section>
+    <div class="container pt-4">
+        <div class="attendence_table_field">
+            <div class="mt-5">
+                <table class="w-100">
+                    <tr class="course_heading">
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Morning</th>
+                        <th class="text-center">Evening</th>
+                    </tr>
+                    {% for i in att %}
+                    <tr>
+                        <td>{{ i.teacher }}</td>
+                        <td>{{ i.date }}</td>
+                        {% if i.mrngattendence == True %}
+                        <td>Present</td>
+                        {% else %}
+                        <td>Absent</td>
+                        {% endif %}
+                        {% if i.evngattendence == True %}
+                        <td>Present</td>
+                        {% else %}
+                        <td>Absent</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </table>
+                </table>
+            </div>
+        </div>
+</section>
+{% endblock content %}
+
+{% block scriptContent %}
+{% endblock scriptContent %}

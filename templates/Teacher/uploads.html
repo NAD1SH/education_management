@@ -1,0 +1,132 @@
+{% extends "Teacher/base.html" %}
+{% load static %}
+{% load custom_tags %}
+
+
+
+
+{% block header %}
+<div class="nav_bar bg-primary d-flex justify-content-between pe-4">
+    <div class="ps-4">
+        <h2 class="text-light mt-1">Uploaded Materials</h2>
+    </div>
+    <div class="">
+        <a href="{% url 'TrHome' %}" class="text-light fs-3 me-3 mt-1"><i class="bi bi-house-door-fill"></i></a>
+    </div>
+</div>
+{% endblock header %}
+
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="upload-materials mb-5 pt-4">
+            <table style="width: 100%;">
+                <tr>
+                    <th style="width: 20%;">Title</th>
+                    <th style="width: 30%;">Description</th>
+                    <th style="width: 30%;">Name</th>
+                    <th style="width: 10%;">File</th>
+                    <th style="width: 5%;">Edit</th>
+                    <th style="width: 5%;">Delete</th>
+                </tr>
+                {% for i in fields %}
+                <tr>
+                    <td>{{ i.title }}</td>
+                    <td>{{ i.description }}</td>
+                    <td>{% material_name i.material.name %}</td>
+                    <td>
+                        <a href="{{ i.material.url }}" target="_blank">View</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'editMaterial' i.id %}" class="text-dark">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'deleteMaterial' i.id %}" class="text-dark">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="">
+            <div class="upload-form-field p-4 w-100"
+                style="border: 2px solid black; border-radius: 20px; max-width: 450px;">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <label for="title">Title : </label>
+                    <input type="text" name="title" placeholder="Enter Title..." required> <br><br>
+
+                    <label for="description" style="vertical-align: top;">Description : </label>
+                    <textarea name="description" cols="25" rows="1" placeholder="Enter Description..."
+                        required></textarea><br><br>
+
+                    <div id="preview" class="mt-1 w-100 mb-3">
+                    </div>
+
+                    <input class="form-control form-control-sm mb-1" type="file" name="material"
+                        accept="image/*, video/*, application/pdf" id="fileInput" required>
+
+                    <input type="submit" value="submit" class="btn btn-primary btn-sm mt-2 w-100">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+
+{% block scriptContent %}
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+
+    fileInput.addEventListener('change', function () {
+        const file = fileInput.files[0];
+        if (file) {
+            const fileType = file.type.split('/')[0];
+
+            if (fileType === 'image') {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.style.maxWidth = '100%';
+                preview.innerHTML = '';
+                preview.appendChild(img);
+            } else if (fileType === 'video') {
+                const video = document.createElement('video');
+                video.src = URL.createObjectURL(file);
+                video.controls = true;
+                video.style.maxWidth = '100%';
+                preview.innerHTML = '';
+                preview.appendChild(video);
+            } else if (fileType === 'application' && file.type === 'application/pdf') {
+                const pdf = document.createElement('iframe');
+                pdf.src = URL.createObjectURL(file);
+                pdf.style.width = '100%';
+                pdf.style.height = '500px';
+                preview.innerHTML = '';
+                preview.appendChild(pdf);
+            } else {
+                alert('Unsupported file type. Please upload an image, video, or PDF.');
+                fileInput.value = '';
+            }
+        }
+    });
+
+    // Add event listener to toggle full-screen mode
+    let isFullScreen = false;
+    preview.addEventListener('click', () => {
+        if (isFullScreen) {
+            preview.classList.remove('full-screen');
+        } else {
+            preview.classList.add('full-screen');
+        }
+        isFullScreen = !isFullScreen;
+    });
+</script>
+{% endblock scriptContent %}

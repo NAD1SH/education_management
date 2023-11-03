@@ -1,0 +1,43 @@
+{% extends "Teacher/base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="nav_bar bg-primary d-flex justify-content-between pe-4">
+    <div class="ps-4">
+        <h2 class="text-light mt-1">PROFILE</h2>
+    </div>
+    <div class="">
+        <a href="{% url 'TrHome' %}" class="text-light fs-3 me-3 mt-1"><i class="bi bi-house-door-fill"></i></a>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="profile-page" style="margin-top: 150px; margin-left: 300px;">
+            <div class="d-flex p-4" style="width: fit-content; border: 1px solid black; border-radius: 10px; box-shadow: 0px 0px 20px rgb(64, 64, 64);">
+                <div class="me-4">
+                    <h3>Name : </h3>
+                    <h3>Register No : </h3>
+                    <h3>Contact : </h3>
+                    <h3>Country : </h3>
+                    <h3>State : </h3>
+                    <h3>District : </h3>
+                </div>
+                <div class="">
+                    <h3>{{ teacher_user.name }}</h3>
+                    <h3>{{ teacher_user.reg_no }}</h3>
+                    <h3>{{ teacher_user.contact }}</h3>
+                    <h3>{{ teacher_user.country }}</h3>
+                    <h3>{{ teacher_user.state }}</h3>
+                    <h3>{{ teacher_user.district }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block scriptContent %}
+{% endblock scriptContent %}
