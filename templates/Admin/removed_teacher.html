@@ -29,8 +29,6 @@
                         <th style="width: 5%;">Country</th>
                         <th style="width: 5%;">State</th>
                         <th style="width: 5%;">District</th>
-                        <th style="width: 2%;">Edit</th>
-                        <th style="width: 2%;">Delete</th>
                     </tr>
                     {% for i in teacher %}
                     {% if i.user.is_active == False %}
@@ -42,13 +40,6 @@
                         <td>{{ i.country }}</td>
                         <td>{{ i.state }}</td>
                         <td>{{ i.district }}</td>
-                        <td><a href="{% url 'editTeacher' i.id %}" class="text-dark"><i
-                                    class="bi bi-pencil-square"></i></a></td>
-                        <td>
-                            <a href="{% url 'DeleteTeacher' i.id %}" class="text-dark">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
                     </tr>
                     {% endif %}
                     {% endfor %}

@@ -31,8 +31,6 @@
                         <th style="width: 6%;">State</th>
                         <th style="width: 6%;">District</th>
                         <th style="width: 10%;">Batch</th>
-                        <th style="width: 2%;">Edit</th>
-                        <th style="width: 2%;">Delete</th>
                     </tr>
                     {% for i in std %}
                     {% if i.user.is_active == False %}
@@ -46,10 +44,6 @@
                         <td>{{ i.state }}</td>
                         <td>{{ i.district }}</td>
                         <td>{{ i.batch_start }} - {{ i.batch_end }}</td>
-                        <td><a href="{% url 'editStudent' i.id %}" class="text-dark"><i
-                                    class="bi bi-pencil-square"></i></a></td>
-                        <td><a href="{% url 'DeleteStudent' i.id %}" class="text-dark"><i class="bi bi-trash"></i></a>
-                        </td>
                     </tr>
                     {% endif %}
                     {% endfor %}
